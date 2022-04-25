@@ -33,3 +33,14 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# Ignore terraform generated files
+
+tkg-cluster.yml
+vsphere-storageclass.yml
+datastore_url.txt
+default-ssl-cert-base64.txt
+tce-*.gz
+tanzu-*.gz
+tanzu-*.tar
+kubectl-*.gz
