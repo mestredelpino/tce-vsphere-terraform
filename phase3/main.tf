@@ -199,11 +199,11 @@ resource "vsphere_virtual_machine" "jumpbox" {
     private_key = file("~/.ssh/id_rsa")
   }
 
-  provisioner "file" {
-    # Copy TKG configuration file.
-    source      = "${var.kubectl-vmware-cli}"
-    destination = "/home/ubuntu/kubectl-cli.gz"
-  }
+//  provisioner "file" {
+//    # Copy TKG configuration file.
+//    source      = "${var.kubectl-vmware-cli}"
+//    destination = "/home/ubuntu/kubectl-cli.gz"
+//  }
 
   provisioner "file" {
     # Copy TKG configuration file.
@@ -224,7 +224,7 @@ resource "vsphere_virtual_machine" "jumpbox" {
 
   provisioner "file" {
     # Copy kubectl.
-    source      = "${var.tanzu-cli}"
+    source      = var.tanzu-cli
     destination = "/home/ubuntu/${var.tanzu-cli}"
   }
 
