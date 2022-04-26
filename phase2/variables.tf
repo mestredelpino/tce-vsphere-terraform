@@ -16,5 +16,5 @@ variable "tanzu-workloads-network-name" {}
 variable "tanzu-workloads-network-cidr" {}
 
 variable "dns-search_domain" {}
-variable "dns-server_list" {}
+variable "dns-server" {}
 

@@ -151,7 +151,6 @@ resource "local_file" "env_file" {
     control_plane_endpoint_tkg_services = local.tkg_services_cluster_control_plane_ip
     control_plane_endpoint_dev          = local.dev_cluster_control_plane_ip
     tanzu_cli                           = var.tanzu-cli
-    dns-server                          = var.dns-server
   })
   filename        = "env"
   file_permission = "0644"
@@ -219,19 +218,13 @@ resource "vsphere_virtual_machine" "jumpbox" {
 
   provisioner "file" {
     # Copy additional configuration file.
-    source      = "add-user.yaml"
-    destination = "/home/ubuntu/add-user.yaml"
-  }
-
-  provisioner "file" {
-    # Copy additional configuration file.
     source      = "./vsphere-storageclass.yml"
     destination = "/home/ubuntu/tanzu/vsphere-storageclass.yml"
   }
 
   provisioner "file" {
     # Copy kubectl.
-    source      = "../vmware/tanzu/${var.tanzu-cli}"
+    source      = "${var.tanzu-cli}"
     destination = "/home/ubuntu/${var.tanzu-cli}"
   }
 

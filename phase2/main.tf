@@ -7,6 +7,13 @@ terraform {
   }
 }
 
+locals {
+  service_engine_group = "Default-Group"
+  tenant_ref           = "/api/tenant/?name=admin"
+  ipam-name            = "TCE-IPAM"
+  avi-backup-config-name = "Backup-Configuration"
+}
+
 provider "avi" {
   avi_username   = var.avi-username
   avi_tenant     = var.avi-tenant
@@ -14,6 +21,7 @@ provider "avi" {
   avi_controller = data.terraform_remote_state.phase1.outputs.avi-controller-ip
   avi_version    = var.avi-version
 }
+
 
 data "terraform_remote_state" "phase1" {
   backend = "local"
@@ -26,10 +34,8 @@ data "avi_sslkeyandcertificate" "default-ssl" {
   name = "System-Default-Cert"
 }
 
-locals {
-  service_engine_group = "Default-Group"
-  tenant_ref           = "/api/tenant/?name=admin"
-  ipam-name            = "TCE-IPAM"
+data "avi_backupconfiguration" "backup-config" {
+  name = local.avi-backup-config-name
 }
 
 resource "avi_network" "avi-mgmt" {
@@ -130,15 +136,6 @@ resource "avi_ipamdnsproviderprofile" "ipam-provider" {
   depends_on = [avi_backupconfiguration.config,avi_systemconfiguration.system-config]
 }
 
-locals {
-  avi-backup-config-name = "Backup-Configuration"
-}
-
-data "avi_backupconfiguration" "backup-config" {
-  name = local.avi-backup-config-name
-}
-
-
 resource "avi_systemconfiguration" "system-config" {
   uuid = "default"
   default_license_tier = "ESSENTIALS"
@@ -150,16 +147,12 @@ resource "avi_systemconfiguration" "system-config" {
   dns_configuration {
     search_domain = var.dns-search_domain
     server_list {
-      addr = var.dns-server_list
+      addr = var.dns-server
       type = "V4"
     }
+
   }
   welcome_workflow_complete = false
-}
-
-output "backup-config" {
-  value = avi_backupconfiguration.config
-  sensitive = true
 }
 
 resource "avi_backupconfiguration" "config" {

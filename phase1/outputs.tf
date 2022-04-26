@@ -34,11 +34,6 @@ output "avi-controller-ip" {
   value = var.avi-controller-ip
 }
 
-output "avi-controller-password" {
-  value = var.avi-password
-  sensitive = true
-}
-
 output "avi-mgmt-network-name" {
   value = data.vsphere_network.avi-mgmt.name
 }
@@ -46,3 +41,4 @@ output "avi-mgmt-network-name" {
 output "avi-mgmt-network-cidr" {
   value = var.avi-mgmt-network-cidr
 }
+

@@ -12,7 +12,7 @@ variable "vsphere-password" {
 }
 
 variable "vsphere-server" {
-  description = "Your vCenter's FQDN"
+  description = "Your vCenter server"
   type = string
 }
 
@@ -28,6 +28,7 @@ variable "vsphere-datastore" {
 
 variable "vsphere-resource_pool" {
   description = "The name of your vSphere resource pool"
+  default = "Resources"
   type = string
 }
 
@@ -76,15 +77,21 @@ variable "avi-mgmt-network-gw" {
 }
 
 
-variable "avi-vm-name" {}
-variable "avi-password" {}
+variable "avi-vm-name" {
+  default = "avi-controller"
+}
 
 
 variable "focal-ova-name" {}
 variable "tanzu-ova-name" {}
 
 
-variable "vsphere-vm-template-folder" {}
+variable "vsphere-vm-template-folder" {
+  default = ""
+}
+variable "vsphere-vm-avi-folder" {
+  default = ""
+}
 
 variable "remote-ova-url-avi" {
   description = "The URL of the location where the AVI OVA is located"
@@ -104,4 +111,3 @@ variable "local-ova-path-avi" {
   description = "The (local) path to the AVI OVA"
   default = null
 }
-

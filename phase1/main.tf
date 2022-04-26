@@ -59,6 +59,12 @@ resource "vsphere_folder" "templates-folder" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
+resource "vsphere_folder" "avi-folder" {
+  path          = var.vsphere-vm-avi-folder
+  type          = "vm"
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
 resource "vsphere_virtual_machine" "focal-cloudserver" {
   name                       = var.focal-ova-name
   resource_pool_id           = data.vsphere_resource_pool.pool.id
