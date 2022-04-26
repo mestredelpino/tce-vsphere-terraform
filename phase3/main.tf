@@ -224,7 +224,7 @@ resource "vsphere_virtual_machine" "jumpbox" {
 
   provisioner "file" {
     # Copy kubectl.
-    source      = var.tanzu-cli
+    source      = "${var.tanzu-cli}"
     destination = "/home/ubuntu/${var.tanzu-cli}"
   }
 
