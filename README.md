@@ -1,10 +1,6 @@
-##Readme Coming up
-This repository paves the road for a deployment of Tanzu Kubernetes Grid (or Community Edition)
+## TCE with NSX ALB on vSphere with Terraform
 
-
-
-The script consists of a phased terraform deployment which deploys a
-
+Deploy Tanzu Kubernetes Grid (Tanzu Community Edition) with an NSX Advanced Load Balancer (or AVI) with Terraform
 
 ### Setting up the environment
 
