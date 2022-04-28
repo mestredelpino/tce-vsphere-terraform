@@ -64,8 +64,9 @@ data "vsphere_virtual_machine" "ubuntu_template" {
 
 data "local_file" "default-ssl-cert-base64" {
   filename = "./default-ssl-cert-base64.txt"
-  depends_on = [null_resource.get-certificate]
+//  depends_on = [null_resource.get-certificate] (Remove comments to get the datastore url through terraform running on powershell 1/2)
 }
+
 data "local_file" "vsphere-datastore-url" {
   filename = local.datastore-url-file
 }
@@ -77,7 +78,7 @@ locals {
   datastore-url-file                    = "./datastore_url.txt"
 }
 
-# EXTRACT SSL CERTIFICATE (Comment out to get the certificate through terraform running on powershell)
+# EXTRACT SSL CERTIFICATE (Remove comments to get the certificate through terraform running on powershell)
 //resource "null_resource" "get-certificate" {
 //  provisioner "local-exec" {
 //    command = <<EOT
@@ -91,7 +92,7 @@ locals {
 //  }
 //}
 
-# EXTRACT DATASTORE URL FOR KUBERNETES STORAGE CLASS (Comment out to get the datastore url through terraform running on powershell)
+# EXTRACT DATASTORE URL FOR KUBERNETES STORAGE CLASS (Remove comments to get the datastore url through terraform running on powershell 2/2)
 //resource "null_resource" "get-datastore-url" {
 //  provisioner "local-exec" {
 //    command = <<EOT
