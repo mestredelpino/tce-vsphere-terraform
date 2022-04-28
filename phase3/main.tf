@@ -77,32 +77,32 @@ locals {
   datastore-url-file                    = "./datastore_url.txt"
 }
 
-# EXTRACT SSL CERTIFICATE
-resource "null_resource" "get-certificate" {
-  provisioner "local-exec" {
-    command = <<EOT
-$terraform_state = (Get-Content '..\phase2\terraform.tfstate')
-$terraform_state = $terraform_state | ConvertFrom-JSON
-$certificate_base64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes(($terraform_state.outputs.cert.value.certificate.certificate).trim()))
-$certificate_base64 | set-content default-ssl-cert-base64.txt -nonewline
-EOT
-    interpreter = ["C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe", "-Command"]
-    when = create
-  }
-}
+# EXTRACT SSL CERTIFICATE (Comment out to get the certificate through terraform running on powershell)
+//resource "null_resource" "get-certificate" {
+//  provisioner "local-exec" {
+//    command = <<EOT
+//$terraform_state = (Get-Content '..\phase2\terraform.tfstate')
+//$terraform_state = $terraform_state | ConvertFrom-JSON
+//$certificate_base64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes(($terraform_state.outputs.cert.value.certificate.certificate).trim()))
+//$certificate_base64 | set-content default-ssl-cert-base64.txt -nonewline
+//EOT
+//    interpreter = ["C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe", "-Command"]
+//    when = create
+//  }
+//}
 
-# EXTRACT DATASTORE URL FOR KUBERNETES STORAGE CLASS
-resource "null_resource" "get-datastore-url" {
-  provisioner "local-exec" {
-    command = <<EOT
-Set-PowerCLIConfiguration -InvalidCertificateAction:Ignore -Scope User -ParticipateInCEIP $false -Confirm:$false
-Connect-VIServer -Server "${data.terraform_remote_state.phase1.outputs.vsphere-server}" -User "${data.terraform_remote_state.phase1.outputs.vsphere-user}" -Password "${data.terraform_remote_state.phase1.outputs.vsphere-password}"
-(Get-Datastore "${data.terraform_remote_state.phase1.outputs.vsphere-datastore}").ExtensionData.info.url  | set-content "${local.datastore-url-file}" -nonewline
-EOT
-    interpreter = ["C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe", "-Command"]
-    when = create
-  }
-}
+# EXTRACT DATASTORE URL FOR KUBERNETES STORAGE CLASS (Comment out to get the datastore url through terraform running on powershell)
+//resource "null_resource" "get-datastore-url" {
+//  provisioner "local-exec" {
+//    command = <<EOT
+//Set-PowerCLIConfiguration -InvalidCertificateAction:Ignore -Scope User -ParticipateInCEIP $false -Confirm:$false
+//Connect-VIServer -Server "${data.terraform_remote_state.phase1.outputs.vsphere-server}" -User "${data.terraform_remote_state.phase1.outputs.vsphere-user}" -Password "${data.terraform_remote_state.phase1.outputs.vsphere-password}"
+//(Get-Datastore "${data.terraform_remote_state.phase1.outputs.vsphere-datastore}").ExtensionData.info.url  | set-content "${local.datastore-url-file}" -nonewline
+//EOT
+//    interpreter = ["C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe", "-Command"]
+//    when = create
+//  }
+//}
 
 resource "vsphere_folder" "vm_folder" {
   path          = var.vm_folder

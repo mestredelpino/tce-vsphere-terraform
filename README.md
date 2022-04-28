@@ -109,14 +109,37 @@ tanzu-workloads-network-name = "" # The name of the Tanzu workloads network
 ## 3. Deploying the Tanzu jumpbox
 
 1. Create a file phase1/terraform.tfvars
+2. Navigate to the *"phase3"* directory
 
 ```
 tanzu-cli  = "" # The file containing the Tanzu CLI
 vm_folder  = "" # The folder (to create) that will contain the cluster node VMs
 ```
-2. Navigate to the *"phase3"* directory
-3. Run `terraform init`
-4. Run `terraform apply`
+
+### Getting the datastore URL
+In order to create a Kubernetes storage class for your Tanzu deployment, you will need to get the datastore url from the 
+datastore you used in your inputs in phase 1.
+
+3. Run:
+```
+Set-PowerCLIConfiguration -InvalidCertificateAction:Ignore -Confirm:$false
+Connect-VIServer -Server <vCenter address> -User <vCenter user> -Password <vCenter Password>
+(Get-Datastore <vSphere datastore>).ExtensionData.info.url  | set-content datastore_url.txt -nonewline
+```
+
+### Formatting the NSX ALB default ssl certificate
+Extract the SSL-certificate from the phase2/terraform state and write it into a file for Terraform to use it. (Terraform treats the resource "avi_sslkeyandcertificate" 
+as one object, and does not allow for querying its attributes)
+
+4. Run:
+```
+$terraform_state = (Get-Content '..\phase2\terraform.tfstate')
+$terraform_state = $terraform_state | ConvertFrom-JSON
+$certificate_base64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes(($terraform_state.outputs.cert.value.certificate.certificate).trim()))
+$certificate_base64 | set-content default-ssl-cert-base64.txt -nonewline
+```
+5. Run `terraform init`
+6. Run `terraform apply`
 
 ## 4. Deploying the TCE clusters
 The previous step will finish by prompting the IP address of the deployed jumpbox. SSH into that VM by running:

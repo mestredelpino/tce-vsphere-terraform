@@ -41,4 +41,3 @@ output "avi-mgmt-network-name" {
 output "avi-mgmt-network-cidr" {
   value = var.avi-mgmt-network-cidr
 }
-
