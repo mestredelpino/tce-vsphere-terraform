@@ -152,6 +152,7 @@ resource "local_file" "env_file" {
     control_plane_endpoint_tkg_services = local.tkg_services_cluster_control_plane_ip
     control_plane_endpoint_dev          = local.dev_cluster_control_plane_ip
     tanzu_cli                           = var.tanzu-cli
+    kubectl_version                     = var.kubectl_version
   })
   filename        = "env"
   file_permission = "0644"

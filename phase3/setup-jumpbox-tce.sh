@@ -17,9 +17,9 @@ if [ -f /home/ubuntu/kubectl-cli.gz ]; then
 fi
 
 #
-##curl -LO https://dl.k8s.io/release/v1.20.1/bin/linux/amd64/kubectl
-##sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-##rm /home/ubuntu/kubectl
+curl -LO https://dl.k8s.io/release/v$kubectl_version/bin/linux/amd64/kubectl
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+rm /home/ubuntu/kubectl
 #
 
 

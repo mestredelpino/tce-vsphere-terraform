@@ -41,6 +41,7 @@ data "avi_backupconfiguration" "backup-config" {
 resource "avi_network" "avi-mgmt" {
   name       = data.terraform_remote_state.phase1.outputs.avi-mgmt-network-name
   cloud_ref = avi_cloud.vcenter_cloud.id
+  dhcp_enabled = false
   configured_subnets {
     prefix {
       mask = split("/",data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr)[1]
@@ -178,6 +179,7 @@ resource "avi_cloud" "vcenter_cloud" {
     datacenter         = data.terraform_remote_state.phase1.outputs.vsphere-datacenter
     management_network = data.terraform_remote_state.phase1.outputs.avi-mgmt-network-name
     privilege          = "WRITE_ACCESS"
+
     management_ip_subnet {
       mask = split("/",data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr)[1]
       ip_addr {
@@ -192,8 +194,8 @@ resource "avi_cloud" "vcenter_cloud" {
 //
 //
 //resource "avi_vrfcontext" "global" {
-//  name = "global"
-////  cloud_ref = avi_cloud.HomeLab.id
+//  name = "management"
+//  cloud_ref = avi_cloud.vcenter_cloud.id
 //  system_default = true
 ////  labels {
 ////    key = ""
@@ -214,4 +216,4 @@ resource "avi_cloud" "vcenter_cloud" {
 //    }
 //  }
 //}
-
+//
