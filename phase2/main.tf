@@ -193,27 +193,23 @@ resource "avi_cloud" "vcenter_cloud" {
 
 //
 //
-//resource "avi_vrfcontext" "global" {
-//  name = "management"
-//  cloud_ref = avi_cloud.vcenter_cloud.id
-//  system_default = true
-////  labels {
-////    key = ""
-////  }
-//
-//  static_routes {
-//    route_id = "route"
-//    next_hop {
-//      addr = var.tanzu-services-network-cidr
-//      type = "V4"
-//    }
-//    prefix {
-//      mask = 24
-//      ip_addr {
-//        addr = cidrhost(var.tanzu-services-network-cidr, 1)
-//        type = "V4"
-//      }
-//    }
-//  }
-//}
-//
+resource "avi_vrfcontext" "global" {
+  name = "global"
+  cloud_ref = avi_cloud.vcenter_cloud.id
+  system_default = true
+  static_routes {
+    route_id = 1
+    next_hop {
+      addr = cidrhost(var.tanzu-services-network-cidr, 1)
+      type = "V4"
+    }
+    prefix {
+      mask = 0
+      ip_addr {
+        addr = "0.0.0.0"#var.tanzu-services-network-cidr
+        type = "V4"
+      }
+    }
+  }
+}
+
