@@ -23,7 +23,7 @@ output "avi-tenant-ref" {
 }
 
 output "avi-cloud" {
-  value = avi_cloud.HomeLab.name
+  value = avi_cloud.vcenter_cloud.name
 }
 
 output "avi-se-group" {
@@ -45,7 +45,7 @@ output "tanzu-workloads-network-cidr" {
 output "tanzu-workloads-network-name" {
   value = var.tanzu-workloads-network-name
 }
-//
+
 output "cert" {
   value = data.avi_sslkeyandcertificate.default-ssl
 }

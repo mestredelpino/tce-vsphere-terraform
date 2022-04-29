@@ -40,7 +40,7 @@ data "avi_backupconfiguration" "backup-config" {
 
 resource "avi_network" "avi-mgmt" {
   name       = data.terraform_remote_state.phase1.outputs.avi-mgmt-network-name
-  tenant_ref = local.tenant_ref
+  cloud_ref = avi_cloud.vcenter_cloud.id
   configured_subnets {
     prefix {
       mask = split("/",data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr)[1]
@@ -60,7 +60,7 @@ resource "avi_network" "avi-mgmt" {
           type = "V4"
         }
       }
-      type = "STATIC_IPS_FOR_VIP"
+      type = "STATIC_IPS_FOR_SE"
     }
   }
     depends_on = [avi_backupconfiguration.config,avi_systemconfiguration.system-config]
@@ -68,7 +68,7 @@ resource "avi_network" "avi-mgmt" {
 
 resource "avi_network" "tanzu-workloads-network" {
   name       = var.tanzu-workloads-network-name
-  tenant_ref = local.tenant_ref
+  cloud_ref  = avi_cloud.vcenter_cloud.id
   configured_subnets {
     prefix {
       mask = split("/",var.tanzu-workloads-network-cidr)[1]
@@ -96,7 +96,7 @@ resource "avi_network" "tanzu-workloads-network" {
 
 resource "avi_network" "tanzu-services-network" {
   name = var.tanzu-services-network-name
-  tenant_ref = local.tenant_ref
+  cloud_ref = avi_cloud.vcenter_cloud.id
   configured_subnets {
     prefix {
       mask = split("/",var.tanzu-services-network-cidr)[1]
@@ -130,7 +130,7 @@ resource "avi_ipamdnsproviderprofile" "ipam-provider" {
   tenant_ref = local.tenant_ref
   internal_profile {
     usable_networks  {
-      nw_ref = avi_network.tanzu-services-network.name
+      nw_ref = var.tanzu-services-network-name
     }
   }
   depends_on = [avi_backupconfiguration.config,avi_systemconfiguration.system-config]
@@ -162,18 +162,21 @@ resource "avi_backupconfiguration" "config" {
   save_local = true
 }
 
-resource "avi_cloud" "HomeLab" {
+resource "avi_cloud" "vcenter_cloud" {
   name = var.avi-cloud-name
   vtype = "CLOUD_VCENTER"
   dhcp_enabled = false
   ipam_provider_ref = avi_ipamdnsproviderprofile.ipam-provider.id
   se_group_template_ref = local.service_engine_group
+  prefer_static_routes = true
+  enable_vip_static_routes = true
+  ip6_autocfg_enabled = false
   vcenter_configuration {
     vcenter_url        = data.terraform_remote_state.phase1.outputs.vsphere-server
     username           = data.terraform_remote_state.phase1.outputs.vsphere-user
     password           = data.terraform_remote_state.phase1.outputs.vsphere-password
     datacenter         = data.terraform_remote_state.phase1.outputs.vsphere-datacenter
-    management_network = avi_network.avi-mgmt.name
+    management_network = data.terraform_remote_state.phase1.outputs.avi-mgmt-network-name
     privilege          = "WRITE_ACCESS"
     management_ip_subnet {
       mask = split("/",data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr)[1]
@@ -183,8 +186,32 @@ resource "avi_cloud" "HomeLab" {
       }
     }
   }
-  depends_on = [avi_ipamdnsproviderprofile.ipam-provider,avi_systemconfiguration.system-config]
+  depends_on = [avi_systemconfiguration.system-config]
 }
 
-
+//
+//
+//resource "avi_vrfcontext" "global" {
+//  name = "global"
+////  cloud_ref = avi_cloud.HomeLab.id
+//  system_default = true
+////  labels {
+////    key = ""
+////  }
+//
+//  static_routes {
+//    route_id = "route"
+//    next_hop {
+//      addr = var.tanzu-services-network-cidr
+//      type = "V4"
+//    }
+//    prefix {
+//      mask = 24
+//      ip_addr {
+//        addr = cidrhost(var.tanzu-services-network-cidr, 1)
+//        type = "V4"
+//      }
+//    }
+//  }
+//}
 
