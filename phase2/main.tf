@@ -53,11 +53,11 @@ resource "avi_network" "avi-mgmt" {
     static_ip_ranges  {
       range  {
         begin {
-          addr = cidrhost(data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr, 6)
+          addr = cidrhost(data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr, 151)
           type = "V4"
         }
         end {
-          addr = cidrhost(data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr, 254)
+          addr = cidrhost(data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr, 200)
           type = "V4"
         }
       }
