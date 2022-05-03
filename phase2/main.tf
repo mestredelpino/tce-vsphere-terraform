@@ -81,11 +81,11 @@ resource "avi_network" "tanzu-workloads-network" {
       static_ip_ranges  {
         range  {
           begin {
-            addr = cidrhost(var.tanzu-workloads-network-cidr, 5)
+            addr = cidrhost(var.tanzu-workloads-network-cidr, 50)
             type = "V4"
           }
           end {
-            addr = cidrhost(var.tanzu-workloads-network-cidr, 45)
+            addr = cidrhost(var.tanzu-workloads-network-cidr, 150)
             type = "V4"
           }
         }
