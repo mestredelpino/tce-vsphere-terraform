@@ -14,19 +14,21 @@ variable "kubectl_version" {
 
 
 variable "ssh_key-pub-file" {
+  description = "The path to a file containing the public SSH key for the jumpbox"
   default = null
 }
 
 variable "ssh_key-file" {
+  description = "The path to a file containing the private SSH key for the jumpbox"
   default = null
 }
 
 variable "ssh_key-pub" {
-
+  description = "The public SSH key for the jumpbox"
 }
 
 variable "ssh_key" {
-
+  description = "The private SSH key for the jumpbox"
 }
 
 //variable "kubectl-vmware-cli" {
