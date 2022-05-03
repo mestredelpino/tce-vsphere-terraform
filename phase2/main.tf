@@ -15,11 +15,11 @@ locals {
 }
 
 provider "avi" {
-  avi_username   = var.avi-username
-  avi_tenant     = var.avi-tenant
-  avi_password   = var.avi-password
+  avi_username   = var.avi_controller_username
+  avi_tenant     = var.avi_tenant
+  avi_password   = var.avi_controller_password
   avi_controller = data.terraform_remote_state.phase1.outputs.avi-controller-ip
-  avi_version    = var.avi-version
+  avi_version    = var.avi_version
 }
 
 
@@ -68,24 +68,24 @@ resource "avi_network" "avi-mgmt" {
 }
 
 resource "avi_network" "tanzu-workloads-network" {
-  name       = var.tanzu-workloads-network-name
+  name       = var.tanzu_workloads_network_name
   cloud_ref  = avi_cloud.vcenter_cloud.id
   configured_subnets {
     prefix {
-      mask = split("/",var.tanzu-workloads-network-cidr)[1]
+      mask = split("/",var.tanzu_workloads_network_cidr)[1]
       ip_addr {
-        addr = cidrhost(var.tanzu-workloads-network-cidr, 0)
+        addr = cidrhost(var.tanzu_workloads_network_cidr, 0)
         type = "V4"
       }
     }
       static_ip_ranges  {
         range  {
           begin {
-            addr = cidrhost(var.tanzu-workloads-network-cidr, 5)
+            addr = cidrhost(var.tanzu_workloads_network_cidr, 5)
             type = "V4"
           }
           end {
-            addr = cidrhost(var.tanzu-workloads-network-cidr, 45)
+            addr = cidrhost(var.tanzu_workloads_network_cidr, 45)
             type = "V4"
           }
         }
@@ -96,24 +96,24 @@ resource "avi_network" "tanzu-workloads-network" {
 }
 
 resource "avi_network" "tanzu-services-network" {
-  name = var.tanzu-services-network-name
+  name = var.tanzu_services_network_name
   cloud_ref = avi_cloud.vcenter_cloud.id
   configured_subnets {
     prefix {
-      mask = split("/",var.tanzu-services-network-cidr)[1]
+      mask = split("/",var.tanzu_services_network_cidr)[1]
       ip_addr {
-        addr = cidrhost(var.tanzu-services-network-cidr, 0)
+        addr = cidrhost(var.tanzu_services_network_cidr, 0)
         type = "V4"
       }
     }
     static_ip_ranges {
       range {
         begin {
-          addr = cidrhost(var.tanzu-services-network-cidr, 5)
+          addr = cidrhost(var.tanzu_services_network_cidr, 5)
           type = "V4"
         }
         end {
-          addr = cidrhost(var.tanzu-services-network-cidr, 45)
+          addr = cidrhost(var.tanzu_services_network_cidr, 45)
           type = "V4"
         }
       }
@@ -131,7 +131,7 @@ resource "avi_ipamdnsproviderprofile" "ipam-provider" {
   tenant_ref = local.tenant_ref
   internal_profile {
     usable_networks  {
-      nw_ref = var.tanzu-services-network-name
+      nw_ref = var.tanzu_services_network_name
     }
   }
   depends_on = [avi_backupconfiguration.config,avi_systemconfiguration.system-config]
@@ -142,13 +142,13 @@ resource "avi_systemconfiguration" "system-config" {
   default_license_tier = "ESSENTIALS"
   email_configuration {
     smtp_type = "SMTP_LOCAL_HOST"
-    auth_username = var.avi-username
-    auth_password = var.avi-password
+    auth_username = var.avi_controller_username
+    auth_password = var.avi_controller_password
   }
   dns_configuration {
-    search_domain = var.dns-search_domain
+    search_domain = var.dns_search_domain
     server_list {
-      addr = var.dns-server
+      addr = var.dns_server
       type = "V4"
     }
 
@@ -159,12 +159,12 @@ resource "avi_systemconfiguration" "system-config" {
 resource "avi_backupconfiguration" "config" {
   name = local.avi-backup-config-name
   uuid = data.avi_backupconfiguration.backup-config.uuid
-  backup_passphrase = var.avi-password
+  backup_passphrase = var.avi_controller_password
   save_local = true
 }
 
 resource "avi_cloud" "vcenter_cloud" {
-  name = var.avi-cloud-name
+  name = var.avi_cloud_name
   vtype = "CLOUD_VCENTER"
   dhcp_enabled = false
   ipam_provider_ref = avi_ipamdnsproviderprofile.ipam-provider.id
@@ -200,13 +200,13 @@ resource "avi_vrfcontext" "global" {
   static_routes {
     route_id = 1
     next_hop {
-      addr = cidrhost(var.tanzu-services-network-cidr, 1)
+      addr = cidrhost(var.tanzu_services_network_cidr, 1)
       type = "V4"
     }
     prefix {
       mask = 0
       ip_addr {
-        addr = "0.0.0.0"#var.tanzu-services-network-cidr
+        addr = "0.0.0.0"
         type = "V4"
       }
     }

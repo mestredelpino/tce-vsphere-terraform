@@ -2,7 +2,7 @@ variable "vm_folder" {
   type    = string
 }
 
-variable "tanzu-cli" {
+variable "tanzu_cli" {
   description = "The path to your Tanzu CLI file (.tar.gz)"
   type = string
 }
@@ -13,24 +13,14 @@ variable "kubectl_version" {
 }
 
 
-variable "ssh_key-pub-file" {
+variable "ssh_key_pub_file" {
   description = "The path to a file containing the public SSH key for the jumpbox"
   default = null
 }
 
-variable "ssh_key-file" {
+variable "ssh_key_file" {
   description = "The path to a file containing the private SSH key for the jumpbox"
   default = null
-}
-
-variable "ssh_key-pub" {
-  description = "The public SSH key for the jumpbox"
-  default = ""
-}
-
-variable "ssh_key" {
-  description = "The private SSH key for the jumpbox"
-  default = ""
 }
 
 //variable "kubectl-vmware-cli" {

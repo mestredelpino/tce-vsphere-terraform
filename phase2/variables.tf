@@ -1,20 +1,20 @@
-variable "avi-username" {
+variable "avi_controller_username" {
 //  default = data.terraform_remote_state.phase1.outputs.vsphere-user
 }
-variable "avi-password" {
+variable "avi_controller_password" {
 //  default = data.terraform_remote_state.phase1.outputs.vsphere-password
   sensitive = true
 }
-variable "avi-cloud-name" {}
-variable "avi-tenant" {}
-variable "avi-version" {}
+variable "avi_cloud_name" {}
+variable "avi_tenant" {}
+variable "avi_version" {}
 
-variable "tanzu-services-network-name" {}
-variable "tanzu-services-network-cidr" {}
+variable "tanzu_services_network_name" {}
+variable "tanzu_services_network_cidr" {}
 
-variable "tanzu-workloads-network-name" {}
-variable "tanzu-workloads-network-cidr" {}
+variable "tanzu_workloads_network_name" {}
+variable "tanzu_workloads_network_cidr" {}
 
-variable "dns-search_domain" {}
-variable "dns-server" {}
+variable "dns_search_domain" {}
+variable "dns_server" {}
 

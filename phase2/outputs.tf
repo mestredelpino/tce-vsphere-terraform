@@ -1,12 +1,12 @@
 
 
 output "avi-username" {
-  value     = var.avi-username
+  value     = var.avi_controller_username
   sensitive = true
 }
 
 output "avi-password" {
-  value     = var.avi-password
+  value     = var.avi_controller_password
   sensitive = true
 }
 
@@ -31,19 +31,19 @@ output "avi-se-group" {
 }
 
 output "tanzu-services-network-cidr" {
-  value = var.tanzu-services-network-cidr
+  value = var.tanzu_services_network_cidr
 }
 
 output "tanzu-services-network-name" {
-  value = var.tanzu-services-network-name
+  value = var.tanzu_services_network_name
 }
 
 output "tanzu-workloads-network-cidr" {
-  value = var.tanzu-workloads-network-cidr
+  value = var.tanzu_workloads_network_cidr
 }
 
 output "tanzu-workloads-network-name" {
-  value = var.tanzu-workloads-network-name
+  value = var.tanzu_workloads_network_name
 }
 
 output "cert" {
