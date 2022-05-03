@@ -190,7 +190,7 @@ resource "vsphere_virtual_machine" "jumpbox" {
     properties = {
       "instance-id" = "tce-jumpbox"
       "hostname"    = "tce-jumpbox"
-      "public-keys" = var.ssh_key_pub_file
+      "public-keys" = file(var.ssh_key_pub_file)
     }
   }
 
@@ -198,7 +198,7 @@ resource "vsphere_virtual_machine" "jumpbox" {
     host        = vsphere_virtual_machine.jumpbox.default_ip_address
     timeout     = "30s"
     user        = "ubuntu"
-    private_key = var.ssh_key_file
+    private_key = file(var.ssh_key_file)
   }
 
 //  provisioner "file" {
