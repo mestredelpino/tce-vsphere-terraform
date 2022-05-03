@@ -12,6 +12,23 @@ variable "kubectl_version" {
   type = string
 }
 
+
+variable "ssh_key-pub-file" {
+  default = null
+}
+
+variable "ssh_key-file" {
+  default = null
+}
+
+variable "ssh_key-pub" {
+
+}
+
+variable "ssh_key" {
+
+}
+
 //variable "kubectl-vmware-cli" {
 //  description = "The VMware's official kubectl cli (not required for TCE)"
 //  default = ""

@@ -95,8 +95,8 @@ resource "vsphere_virtual_machine" "avi-controller" {
   wait_for_guest_net_timeout = 0
   wait_for_guest_ip_timeout  = 0
   datacenter_id              = data.vsphere_datacenter.dc.id
-  num_cpus                   = 8
-  memory                     = 24000
+  num_cpus                   = var.avi_controller_cpus
+  memory                     = var.avi_controller_memory
 //  folder                     =
   network_interface {
     network_id = data.vsphere_network.avi-mgmt.id

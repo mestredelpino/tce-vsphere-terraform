@@ -76,6 +76,8 @@ locals {
   tkg_services_cluster_control_plane_ip = cidrhost(data.terraform_remote_state.phase2.outputs.tanzu-workloads-network-cidr,18)
   dev_cluster_control_plane_ip          = cidrhost(data.terraform_remote_state.phase2.outputs.tanzu-workloads-network-cidr,19)
   datastore-url-file                    = "./datastore_url.txt"
+  ssh_key                               = var.ssh_key != null ? var.ssh_key : file(var.ssh_key-file)
+  ssh_key-pub                           = var.ssh_key-pub != null ? var.ssh_key-pub : file(var.ssh_key-file)
 }
 
 # EXTRACT SSL CERTIFICATE (Remove comments to get the certificate through terraform running on powershell)
@@ -148,13 +150,13 @@ resource "local_file" "tkg_configuration_file" {
 # Generate additional configuration file.
 resource "local_file" "env_file" {
   content = templatefile("env.tpl", {
-    control_plane_endpoint_mgmt         = local.mgmt_cluster_control_plane_ip
+    control_plane_endpoint_mgmt = local.mgmt_cluster_control_plane_ip
     control_plane_endpoint_tkg_services = local.tkg_services_cluster_control_plane_ip
-    control_plane_endpoint_dev          = local.dev_cluster_control_plane_ip
-    tanzu_cli                           = var.tanzu-cli
-    kubectl_version                     = var.kubectl_version
+    control_plane_endpoint_dev = local.dev_cluster_control_plane_ip
+    tanzu_cli = var.tanzu-cli
+    kubectl_version = var.kubectl_version
   })
-  filename        = "env"
+  filename = "env"
   file_permission = "0644"
 }
 
@@ -190,7 +192,7 @@ resource "vsphere_virtual_machine" "jumpbox" {
     properties = {
       "instance-id" = "tce-jumpbox"
       "hostname"    = "tce-jumpbox"
-      "public-keys" = file("~/.ssh/id_rsa.pub")
+      "public-keys" = local.ssh_key-pub
     }
   }
 
@@ -198,7 +200,7 @@ resource "vsphere_virtual_machine" "jumpbox" {
     host        = vsphere_virtual_machine.jumpbox.default_ip_address
     timeout     = "30s"
     user        = "ubuntu"
-    private_key = file("~/.ssh/id_rsa")
+    private_key = local.ssh_key
   }
 
 //  provisioner "file" {

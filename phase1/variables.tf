@@ -81,6 +81,16 @@ variable "avi-vm-name" {
   default = "avi-controller"
 }
 
+variable "avi_controller_cpus" {
+  description = "Number of vCPUs to assign to your AVI controller"
+  default = 8
+}
+
+variable "avi_controller_memory" {
+  description = "The amount of memory (in MB) to assign to your AVI controller"
+  default = 24000
+}
+
 
 variable "focal-ova-name" {}
 variable "tanzu-ova-name" {}
