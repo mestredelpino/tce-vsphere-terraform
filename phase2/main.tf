@@ -53,11 +53,11 @@ resource "avi_network" "avi-mgmt" {
     static_ip_ranges  {
       range  {
         begin {
-          addr = cidrhost(data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr, 151)
+          addr = cidrhost(data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr, 6)
           type = "V4"
         }
         end {
-          addr = cidrhost(data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr, 200)
+          addr = cidrhost(data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr, 254)
           type = "V4"
         }
       }
@@ -81,11 +81,11 @@ resource "avi_network" "tanzu-workloads-network" {
       static_ip_ranges  {
         range  {
           begin {
-            addr = cidrhost(var.tanzu-workloads-network-cidr, 50)
+            addr = cidrhost(var.tanzu-workloads-network-cidr, 5)
             type = "V4"
           }
           end {
-            addr = cidrhost(var.tanzu-workloads-network-cidr, 150)
+            addr = cidrhost(var.tanzu-workloads-network-cidr, 45)
             type = "V4"
           }
         }
