@@ -25,10 +25,12 @@ variable "ssh_key-file" {
 
 variable "ssh_key-pub" {
   description = "The public SSH key for the jumpbox"
+  default = ""
 }
 
 variable "ssh_key" {
   description = "The private SSH key for the jumpbox"
+  default = ""
 }
 
 //variable "kubectl-vmware-cli" {
