@@ -1,8 +1,6 @@
 #!/bin/sh
 . /home/ubuntu/.env
 
-# set -a; source .env; set +a
-sudo sysctl net/netfilter/nf_conntrack_max=131072
 # Generate a SSH keypair.
 if ! [ -f /home/ubuntu/.ssh/id_rsa ]; then echo "true"
   ssh-keygen -t rsa -f /home/ubuntu/.ssh/id_rsa -q -P ''
