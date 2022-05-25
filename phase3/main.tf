@@ -140,6 +140,7 @@ resource "local_file" "tkg_configuration_file" {
     avi-cloud-name          = data.terraform_remote_state.phase2.outputs.avi-cloud
     avi-se-group            = data.terraform_remote_state.phase2.outputs.avi-se-group
     avi-ssl-certificate     = data.local_file.default-ssl-cert-base64.content
+    tanzu-ova-os            = var.tanzu_ova_os
   })
   filename        = "tkg-cluster.yml"
   file_permission = "0644"

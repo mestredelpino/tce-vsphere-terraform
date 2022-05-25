@@ -12,8 +12,8 @@ variable "avi_version" {}
 variable "tanzu_services_network_name" {}
 variable "tanzu_services_network_cidr" {}
 
-variable "tanzu_workloads_network_name" {}
-variable "tanzu_workloads_network_cidr" {}
+//variable "tanzu_workloads_network_name" {}
+//variable "tanzu_workloads_network_cidr" {}
 
 variable "dns_search_domain" {}
 variable "dns_server" {}

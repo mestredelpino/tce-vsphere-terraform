@@ -18,6 +18,11 @@ variable "ssh_key_pub_file" {
   default = null
 }
 
+variable "tanzu_ova_os" {
+  description = "The Operating System of the Tanzu OVA (photon or ubuntu)"
+  default = null
+}
+
 variable "ssh_key_file" {
   description = "The path to a file containing the private SSH key for the jumpbox"
   default = null

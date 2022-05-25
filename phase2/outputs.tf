@@ -38,13 +38,13 @@ output "tanzu-services-network-name" {
   value = var.tanzu_services_network_name
 }
 
-output "tanzu-workloads-network-cidr" {
-  value = var.tanzu_workloads_network_cidr
-}
-
-output "tanzu-workloads-network-name" {
-  value = var.tanzu_workloads_network_name
-}
+//output "tanzu-workloads-network-cidr" {
+//  value = var.tanzu_workloads_network_cidr
+//}
+//
+//output "tanzu-workloads-network-name" {
+//  value = var.tanzu_workloads_network_name
+//}
 
 output "cert" {
   value = data.avi_sslkeyandcertificate.default-ssl

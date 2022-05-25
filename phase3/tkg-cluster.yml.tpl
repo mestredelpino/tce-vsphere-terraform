@@ -29,6 +29,10 @@ SERVICE_CIDR: 100.64.0.0/13
 
 
 AVI_ENABLE: "true"
+AVI_CONTROL_PLANE_HA_PROVIDER: "true"
+
+AVI_MANAGEMENT_CLUSTER_VIP_NETWORK_CIDR: "${avi-data-network-cidr}"
+AVI_MANAGEMENT_CLUSTER_VIP_NETWORK_NAME: "${avi-data-network-name}"
 AVI_CLOUD_NAME: "${avi-cloud-name}"
 AVI_CONTROLLER: "${avi-controller-ip}"
 AVI_DATA_NETWORK: "${avi-data-network-name}"
@@ -38,8 +42,8 @@ AVI_USERNAME: "${avi-username}"
 AVI_SERVICE_ENGINE_GROUP: "${avi-se-group}"
 AVI_CA_DATA_B64: "${avi-ssl-certificate}"
 
+OS_NAME: "${tanzu-ova-os}"
 
-OS_NAME: "photon"
 
 
 
