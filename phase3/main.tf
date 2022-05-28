@@ -72,9 +72,6 @@ data "local_file" "vsphere-datastore-url" {
 }
 
 locals {
-  mgmt_cluster_control_plane_ip         = cidrhost(data.terraform_remote_state.phase2.outputs.tanzu-workloads-network-cidr,17)
-  tkg_services_cluster_control_plane_ip = cidrhost(data.terraform_remote_state.phase2.outputs.tanzu-workloads-network-cidr,18)
-  dev_cluster_control_plane_ip          = cidrhost(data.terraform_remote_state.phase2.outputs.tanzu-workloads-network-cidr,19)
   datastore-url-file                    = "./datastore_url.txt"
 }
 
@@ -149,9 +146,6 @@ resource "local_file" "tkg_configuration_file" {
 # Generate additional configuration file.
 resource "local_file" "env_file" {
   content = templatefile("env.tpl", {
-    control_plane_endpoint_mgmt = local.mgmt_cluster_control_plane_ip
-    control_plane_endpoint_tkg_services = local.tkg_services_cluster_control_plane_ip
-    control_plane_endpoint_dev = local.dev_cluster_control_plane_ip
     tanzu_cli = var.tanzu_cli
     kubectl_version = var.kubectl_version
   })

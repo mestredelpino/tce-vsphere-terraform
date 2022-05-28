@@ -43,17 +43,14 @@ EOF
   cat <<EOF >> ~/.config/tanzu/tkg/clusterconfigs/mgmt_cluster_config.yaml
 CLUSTER_NAME: mgmt
 CLUSTER_PLAN: dev
-VSPHERE_CONTROL_PLANE_ENDPOINT: "$CONTROL_PLANE_ENDPOINT_MGMT"
 EOF
     cat <<EOF >> ~/tkg_services_cluster_config.yaml
 CLUSTER_NAME: tkg-services
 CLUSTER_PLAN: dev
-VSPHERE_CONTROL_PLANE_ENDPOINT: "$CONTROL_PLANE_ENDPOINT_TKG_SERVICES"
 EOF
     cat <<EOF >> ~/dev01_cluster_config.yaml
 CLUSTER_NAME: dev01
 CLUSTER_PLAN: dev
-VSPHERE_CONTROL_PLANE_ENDPOINT: "$CONTROL_PLANE_ENDPOINT_DEV01"
 EOF
   mv ~/tkg_services_cluster_config.yaml ~/.config/tanzu/tkg/clusterconfigs/tkg_services_cluster_config.yaml
   mv ~/dev01_cluster_config.yaml ~/.config/tanzu/tkg/clusterconfigs/dev01_cluster_config.yaml
