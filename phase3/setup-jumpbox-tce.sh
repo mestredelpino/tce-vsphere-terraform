@@ -93,3 +93,8 @@ sudo apt install -y jq
 wget -O- https://carvel.dev/install.sh > install.sh
 sudo bash install.sh
 rm install.sh
+
+# Install ArgoCD
+
+sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+sudo chmod +x /usr/local/bin/argocd

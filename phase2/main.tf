@@ -67,6 +67,34 @@ resource "avi_network" "avi-mgmt" {
     depends_on = [avi_backupconfiguration.config,avi_systemconfiguration.system-config]
 }
 
+resource "avi_network" "tanzu-workloads-network" {
+  name       = var.tanzu_workloads_network_name
+  cloud_ref  = avi_cloud.vcenter_cloud.id
+  configured_subnets {
+    prefix {
+      mask = split("/",var.tanzu_workloads_network_cidr)[1]
+      ip_addr {
+        addr = cidrhost(var.tanzu_workloads_network_cidr, 0)
+        type = "V4"
+      }
+    }
+    static_ip_ranges  {
+      range  {
+        begin {
+          addr = cidrhost(var.tanzu_workloads_network_cidr, 5)
+          type = "V4"
+        }
+        end {
+          addr = cidrhost(var.tanzu_workloads_network_cidr, 45)
+          type = "V4"
+        }
+      }
+      type = "STATIC_IPS_FOR_VIP"
+    }
+  }
+  depends_on = [avi_backupconfiguration.config,avi_systemconfiguration.system-config]
+}
+
 resource "avi_network" "tanzu-services-network" {
   name = var.tanzu_services_network_name
   cloud_ref = avi_cloud.vcenter_cloud.id
@@ -185,3 +213,9 @@ resource "avi_vrfcontext" "global" {
   }
 }
 
+resource "avi_sslkeyandcertificate" "controller-cert" {
+  name = "tanzu"
+  certificate {
+    subject_alt_names = [data.terraform_remote_state.phase1.outputs.avi-controller-ip]
+  }
+}
