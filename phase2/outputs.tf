@@ -50,3 +50,7 @@ output "cert" {
   value = data.avi_sslkeyandcertificate.default-ssl
 }
 
+//output "cert2" {
+//  value = avi_sslkeyandcertificate.controller-cert.certificate
+//  sensitive = true
+//}

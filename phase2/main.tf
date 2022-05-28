@@ -213,9 +213,16 @@ resource "avi_vrfcontext" "global" {
   }
 }
 
-resource "avi_sslkeyandcertificate" "controller-cert" {
-  name = "tanzu"
-  certificate {
-    subject_alt_names = [data.terraform_remote_state.phase1.outputs.avi-controller-ip]
-  }
-}
+//resource "avi_sslkeyandcertificate" "controller-cert" {
+//  name = "avi-cert"
+//
+//  certificate {
+//    subject {
+//      common_name = "avi-cert"
+//
+//    }
+//    self_signed = true
+//    subject_alt_names = [data.terraform_remote_state.phase1.outputs.avi-controller-ip]
+//  }
+//}
+
