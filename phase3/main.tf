@@ -128,7 +128,6 @@ resource "local_file" "tkg_configuration_file" {
     tanzu-workloads-network = data.terraform_remote_state.phase2.outputs.tanzu-workloads-network-name
     vcenter-resource_pool   = data.terraform_remote_state.phase1.outputs.vsphere-resource_pool
     vcenter-vm_folder       = var.vm_folder
-    control_plane_ip        = local.mgmt_cluster_control_plane_ip
     avi-controller-ip       = data.terraform_remote_state.phase1.outputs.avi-controller-ip
     avi-username            = data.terraform_remote_state.phase2.outputs.avi-username
     avi-password            = data.terraform_remote_state.phase2.outputs.avi-password
