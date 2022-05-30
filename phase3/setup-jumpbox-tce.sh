@@ -58,9 +58,6 @@ EOF
   rm /home/ubuntu/tanzu
 fi
 
-# Install yq.
-sudo snap install yq
-
 # Configure VIm.
 if ! [ -f /home/ubuntu/.vimrc ]; then
   cat <<EOF >> /home/ubuntu/.vimrc
@@ -82,16 +79,30 @@ curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
 chmod +x ./kind
 sudo mv ./kind /usr/local/bin/kind
 
-# Install jq
+# Install yq and jq
 sudo apt update
+sudo snap install yq
 sudo apt install -y jq
 
-# Install carvel tools
+# Install Carvel tools
 wget -O- https://carvel.dev/install.sh > install.sh
 sudo bash install.sh
 rm install.sh
 
-# Install ArgoCD
+# Install MinIO cli
+wget https://dl.min.io/client/mc/release/linux-amd64/mc
+chmod +x mc
+
+# Install ArgoCD cli
 
 sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
 sudo chmod +x /usr/local/bin/argocd
+
+# Install Tekton cli
+sudo apt update;sudo apt install -y gnupg
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3EFE0E0A2F2F60AA
+echo "deb http://ppa.launchpad.net/tektoncd/cli/ubuntu eoan main"|sudo tee /etc/apt/sources.list.d/tektoncd-ubuntu-cli.list
+sudo apt update && sudo apt install -y tektoncd-cli
+
+# Install Helm
+sudo snap install helm --classic
