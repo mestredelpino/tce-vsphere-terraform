@@ -31,7 +31,7 @@ data "terraform_remote_state" "phase1" {
 }
 
 data "avi_sslkeyandcertificate" "default-ssl" {
-  name = "System-Default-Cert"
+  name = "System-Default-Portal-Cert"
 }
 
 data "avi_backupconfiguration" "backup-config" {
@@ -57,7 +57,7 @@ resource "avi_network" "avi-mgmt" {
           type = "V4"
         }
         end {
-          addr = cidrhost(data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr, 254)
+          addr = cidrhost(data.terraform_remote_state.phase1.outputs.avi-mgmt-network-cidr, 45)
           type = "V4"
         }
       }
