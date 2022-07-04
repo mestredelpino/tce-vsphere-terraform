@@ -87,12 +87,13 @@ This process can be automated as William Lam explains in [this blogpost](https:/
 1. Create a file phase2/terraform.tfvars
 
 ```
-avi_username                 = "" # The NSX ALB username 
-avi_password                 = "" # The NSX ALB password
+avi_controller_username      = "" # The NSX ALB username 
+avi_controller_password      = "" # The NSX ALB password
 avi_tenant                   = "" # THe NSX ALB tennant
 avi_version                  = "" # The version of the NSX ALB controller
 avi_cloud_name               = "" # The NSX ALB cloud to create
 
+dns_server                   = "" # Your DNS server
 dns_search_domain            = "" # Your DNS search domain
 dns_server_list              = "" # Your DNS server address
 
@@ -112,8 +113,17 @@ tanzu_workloads_network-name = "" # The name of the Tanzu workloads network
 2. Navigate to the *"phase3"* directory
 
 ```
-tanzu_cli  = "" # The file containing the Tanzu CLI
-vm_folder  = "" # The folder (to create) that will contain the cluster node VMs
+tanzu_cli        = "" # The file containing the Tanzu CLI
+vm_folder        = "" # The folder (to create) that will contain the cluster node VMs
+kubectl_version  = "" # The kubernetes version to install in the jumpbox
+
+# Input the ssh key either as a string or as a file
+ssh_key          = "" # The ssh key (string)
+ssh_key_pub      = "" # The ssh key (string)
+ssh_key_file     = "" # The full path to the file containing the private ssh key
+ssh_key_pub_file = "" # The full path to the file containing the public ssh key
+
+tanzu_ova_os = "ubuntu"
 ```
 
 ### Getting the datastore URL
