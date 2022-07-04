@@ -26,35 +26,35 @@ Deploy Tanzu Kubernetes Grid (Tanzu Community Edition) with an NSX Advanced Load
 1. Create a file phase1/terraform.tfvars
 
 ```
-vsphere-user               = "" # Your vSphere user
-vsphere-password           = "" # Your vSphere password
-vsphere-server             = "" # Your vCenter server
-vsphere-datacenter         = "" # Your vCenter datacenter
-vsphere-host               = "" # The vSphere host where the VMs will get deployed into
-vsphere-datastore          = "" # A VSphere datastore accessible from your vSphere host
-vsphere-resource_pool      = "" # The resource pool for the VM deployment (optional)
-vsphere-network            = "" # The network in which to allocate the VMs
+vsphere_user               = "" # Your vSphere user
+vsphere_password           = "" # Your vSphere password
+vsphere_server             = "" # Your vCenter server
+vsphere_datacenter         = "" # Your vCenter datacenter
+vsphere_host               = "" # The vSphere host where the VMs will get deployed into
+vsphere_datastore          = "" # A VSphere datastore accessible from your vSphere host
+vsphere_resource_pool      = "" # The resource pool for the VM deployment (optional)
+vsphere_network            = "" # The network in which to allocate the VMs
 
-vsphere-vm-folder          = "" # The vSphere folder 
+vsphere_vm_folder          = "" # The vSphere folder 
 
 # NSX ALB template VM
-avi-controller-ip          = "" # The IP address for the AVI controller to deploy
-avi-mgmt-network-cidr      = "" # The network CIDR of for the AVI management network
-avi-mgmt-network-name      = "" # The name of the AVI management network
-avi-mgmt-network-gw        = "" # The IP address of the AVI management network's gateway
-avi-vm-name                = "" # The name for the AVI controller VM (default "avi-controller")
-remote-ova-url-avi         = "" # The remote url to the AVI OVA (set only one of remote or local)
-local-ova-path-avi         = "" # The remote url to the AVI OVA (set only one of remote or local)
+avi_controller_ip          = "" # The IP address for the AVI controller to deploy
+avi_mgmt_network_cidr      = "" # The network CIDR of for the AVI management network
+avi_mgmt_network_name      = "" # The name of the AVI management network
+avi_mgmt_network_gw        = "" # The IP address of the AVI management network's gateway
+avi_vm_name                = "" # The name for the AVI controller VM (default "avi-controller")
+remote_ova_url_avi         = "" # The remote url to the AVI OVA (set only one of remote or local)
+local_ova_path_avi         = "" # The remote url to the AVI OVA (set only one of remote or local)
 
-vsphere-vm-template-folder = "" # The folder to contain the ubuntu and Tanzu template VMs
+vsphere_vm_template_folder = "" # The folder to contain the ubuntu and Tanzu template VMs
 
 # Ubuntu template VM
-focal-ova-name             = "" # The name for the ubuntu template VM (used as an image for the jumpbox)
+focal_ova_name             = "" # The name for the ubuntu template VM (used as an image for the jumpbox)
 
 # Tanzu template VM
-tanzu-ova-name             = "" # The name for the Tanzu template VM
-remote-ova-url-tanzu       = "" # The remote url to the Tanzu OVA (set only one of remote or local)
-local-ova-path-tanzu       = "" # The local path to the Tanzu OVA (set only one of remote or local)
+tanzu_ova_name             = "" # The name for the Tanzu template VM
+remote_ova_url_tanzu       = "" # The remote url to the Tanzu OVA (set only one of remote or local)
+local_ova_path_tanzu       = "" # The local path to the Tanzu OVA (set only one of remote or local)
 ```
 
 2. Open up a console
@@ -84,22 +84,22 @@ This process can be automated as William Lam explains in [this blogpost](https:/
 
 ### Configuring NSX ALB for Tanzu
 
-1. Create a file phase1/terraform.tfvars
+1. Create a file phase2/terraform.tfvars
 
 ```
-avi-username                 = "" # The NSX ALB username 
-avi-password                 = "" # The NSX ALB password
-avi-tenant                   = "" # THe NSX ALB tennant
-avi-version                  = "" # The version of the NSX ALB controller
-avi-cloud-name               = "" # The NSX ALB cloud to create
+avi_username                 = "" # The NSX ALB username 
+avi_password                 = "" # The NSX ALB password
+avi_tenant                   = "" # THe NSX ALB tennant
+avi_version                  = "" # The version of the NSX ALB controller
+avi_cloud_name               = "" # The NSX ALB cloud to create
 
-dns-search_domain            = "" # Your DNS search domain
-dns-server_list              = "" # Your DNS server address
+dns_search_domain            = "" # Your DNS search domain
+dns_server_list              = "" # Your DNS server address
 
-tanzu-services-network-cidr  = "" # The network cidr of the Tanzu services (VIP)
-tanzu-services-network-name  = "" # The name of the Tanzu services network
-tanzu-workloads-network-cidr = "" # The network cidr of the Tanzu workloads (nodes)
-tanzu-workloads-network-name = "" # The name of the Tanzu workloads network
+tanzu_services_network-cidr  = "" # The network cidr of the Tanzu services (VIP)
+tanzu_services_network-name  = "" # The name of the Tanzu services network
+tanzu_workloads_network-cidr = "" # The network cidr of the Tanzu workloads (nodes)
+tanzu_workloads_network-name = "" # The name of the Tanzu workloads network
 
 ```
 2. Navigate to the *"phase2"* directory
@@ -108,11 +108,11 @@ tanzu-workloads-network-name = "" # The name of the Tanzu workloads network
 
 ## 3. Deploying the Tanzu jumpbox
 
-1. Create a file phase1/terraform.tfvars
+1. Create a file phase3/terraform.tfvars
 2. Navigate to the *"phase3"* directory
 
 ```
-tanzu-cli  = "" # The file containing the Tanzu CLI
+tanzu_cli  = "" # The file containing the Tanzu CLI
 vm_folder  = "" # The folder (to create) that will contain the cluster node VMs
 ```
 
